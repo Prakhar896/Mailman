@@ -54,6 +54,8 @@ def send():
         if field not in request.json:
             return jsonify({'error': 'Missing field: ' + field}), 400
     if mailToken != "nil":
+        if not 'mailToken' in request.json:
+          return jsonify({'error': 'No mail token parameter present when authorisation layer is active. Authorisation for mail failed.'}), 400
         if request.json['mailToken'] != mailToken:
             return jsonify({'error': 'Invalid mail token. Authorisation for mail failed.'}), 400
 
@@ -67,4 +69,4 @@ def copyright():
 
 
 if __name__ == "__main__":
-    app.run(port=8000)
+    app.run(host="0.0.0.0", port=8000)
