@@ -5,7 +5,7 @@ message = input("Enter the message of the mail: ")
 additionalContent = input("Enter additional content, if none, type nil: ")
 
 data = {
-    "author": author,
+    "from": author,
     "subject": subject,
     "message": message,
     "additionalContent": additionalContent
@@ -13,7 +13,7 @@ data = {
 
 url = input("Enter Mailman service send URL: ")
 
-result = requests.post(url, json=data)
+result = requests.post(url, json=data, headers={"Content-Type": "application/json"})
 
 try:
     result.raise_for_status()
