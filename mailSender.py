@@ -9,9 +9,11 @@ data = {
     "from": author,
     "subject": subject,
     "message": message,
-    "additionalContent": additionalContent,
-    "mailToken": mailToken
+    "additionalContent": additionalContent
 }
+
+if mailToken != "nil":
+    data['mailToken'] = mailToken
 
 url = input("Enter Mailman service send URL: ")
 
