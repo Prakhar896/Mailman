@@ -42,6 +42,10 @@ def sendWebhookMessage(data):
 def index():
     return fileContent('homepage.html')
 
+@app.route('/about')
+def about():
+    return mdConverter.convert(fileContent('README.md'))
+
 @app.route('/send', methods=['POST'])
 def send():
     if request.headers['Content-Type'] != 'application/json':
