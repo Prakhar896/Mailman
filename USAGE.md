@@ -18,8 +18,9 @@ And that's it!
 2) Go to the channel settings > Integrations > Webhooks > Create webhook (name it whatever you like) and copy the webhook URL
 3) Clone this [GitHub repository](https://github.com/Prakhar896/Mailman)
 4) Open up the cloned folder in any editor (my preference is [VS Code](https://code.visualstudio.com))
-5) Create a new file and name it `webhookURL.py`
+5) Create a new file and name it `config.py`
 6) In said file, create a variable called `url` and set it to the webhook URL you just copied. For e.g `url = https://discord.com`
+7) In the same file, if you wish to add a authorisation layer such that only people you give your `mailToken` to can send you messages, you can create a variable called `mailToken` and set it to anything you want. (e.g `mailToken = 'er9g81'`). If not, set this variable to `nil`. (e.g `mailToken = 'nil'`)
 
 And done! The project is setup and ready to go!
 

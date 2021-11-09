@@ -13,6 +13,7 @@ The body of the post request has 4 elements:
 2) `subject`: Pretty self-explanatory - the subject of your message.
 3) `message`: The main content of your message. This is compulsory and can be however long as you like.
 4) `additionalContent`: This is any additional content, such as code or anything else that you would like to add to your message. This is optional, but it does have to be set to `nil` if you are not adding this component.
+5) `mailToken`: This is an optional parameter but is required if the person you are sending the message to you has an authorsation layer. Without their mail token, you will not be able to send them a message. If a `mailToken` is required, set this parameter to whatever it is. If it is incorrect, the response will tell you that it is the wrong token and your message was not authorised. You do not need to add this parameter if the recipient does not have a `mailToken` filter.
 
 A sample POST request:
 ```json
