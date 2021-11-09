@@ -24,6 +24,6 @@ A sample POST request:
 }
 ```
 
-Alternatively, you can use the `[mailSender.py](https://github.com/Prakhar896/Mailman/blob/main/mailSender.py)` script to send a message in a more interactvie and easier manner.
+Alternatively, you can use the [mailSender.py](https://github.com/Prakhar896/Mailman/blob/main/mailSender.py) script to send a message in a more interactvie and easier manner.
 
 © 2021 Prakhar Trivedi
