@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from webhookURL import url
+from config import url, mailToken
 import requests
 from datetime import datetime
 import mdConverter
@@ -53,6 +53,9 @@ def send():
     for field in ["from", "subject", "message", "additionalContent"]:
         if field not in request.json:
             return jsonify({'error': 'Missing field: ' + field}), 400
+    if mailToken != "nil":
+        if request.json['mailToken'] != mailToken:
+            return jsonify({'error': 'Invalid mail token. Authorisation for mail failed.'}), 400
 
     sendWebhookMessage(request.json)
     return jsonify({'success': 'Message sent'}), 200
