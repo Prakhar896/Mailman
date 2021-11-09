@@ -27,3 +27,5 @@ And done! The project is setup and ready to go!
 If you are on VSC and have the Python extension you can just click the Play button on the top-right and the project will run and a web server will be created.
 
 If not, open up your command prompt (Windows, for macOS its Terminal) and cd (change directory) into the cloned folder. Then type `python main.py`. You should see the output say `Serving Flask app "main" (lazy loading)`
+
+Do note that this will run Mailman locally on your computer and will stop running if your computer goes to sleep. For running it 24/7, you can look for ways to host it on [replit](https://replit.com) for 24 hours without charge using [UptimeRobot](https://uptimerobot.com)
