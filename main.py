@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-from config import url, mailToken
+from config import *
+from activation import *
 import requests
 from datetime import datetime
 import mdConverter
@@ -69,4 +70,40 @@ def copyright():
 
 
 if __name__ == "__main__":
+    # Check activation
+    activationCheck = checkForActivation()
+    if activationCheck == True:
+        print("Mailman is activated!")
+    elif activationCheck == False:
+        print("MAIN: Mailman is not activated! Triggering copy activation now...")
+        print()
+        version = None
+        if not os.path.isfile(os.path.join(os.getcwd(), 'version.txt')):
+            version = input("Pleae enter the version of Mailman you are using: ")
+            print()
+        else:
+            version = open('version.txt', 'r').read()
+        try:
+            initActivation("djr3x6wd", version)
+        except Exception as e:
+            print("MAIN: Error occurred in copy activation. Error: {}".format(e))
+            print("Aborting boot...")
+            sys.exit(1)
+    else:
+        print("MAIN: This copy's license key needs to be re-verified. Triggering key verification request...")
+        print()
+        version = None
+        if not os.path.isfile(os.path.join(os.getcwd(), 'version.txt')):
+            version = input("Pleae enter the version of Mailman you are using: ")
+            print()
+        else:
+            version = open('version.txt', 'r').read()
+        try:
+            makeKVR("djr3x6wd", version)
+        except Exception as e:
+            print("MAIN: Error occurred in verifying license key. Error: {}".format(e))
+            print("Aborting boot...")
+            sys.exit(1)
+        
+
     app.run(host="0.0.0.0", port=8000)
