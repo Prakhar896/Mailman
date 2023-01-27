@@ -2,6 +2,16 @@
 
 This project is completely clone-friendly but there are a few steps you need to take to set it up for yourself.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Activator](#activator)
+    - [How It Works](#how-it-works)
+    - [What I Can Do With Activator](#what-i-can-do-with-activator)
+- [User notice for updating to `1.0.3` and above](#user-notice-for-updating-to-103-and-above)
+- [Steps to setting it up](#steps-to-setting-it-up)
+- [Running It](#setting-up-the-webhook)
+
 ## Requirements
 Here are some of the requirements for this project:
 
@@ -38,6 +48,24 @@ These identifiers are submitted to Activator servers. If an account with the sam
 Then, you can log in to Activator using the link provided in the `licensekey.txt` file. You will be able to see all of your activated copies and their CSNs. You can also manage your account, link other HSN accounts as aliases and much more.
 
 > For more information about Activator, see its [documentation](https://github.com/Prakhar896/ActivatorDocs)
+
+## User notice for updating to `1.0.3` and above
+
+In Mailman version `1.0.3`, the way you configure Mailman has been changed.
+
+When you first update, the `config.py` file that previously contained your Discord Webhook URL and Mail Token  (if you added an authorisation layer, it would be the token you set) will be replaced with new code that loads these variables from a `.env` file.
+
+This is done to make it easier for you to update Mailman in the future. You will no longer have to worry about overwriting your configuration file.
+
+What you need to do:
+
+- **Step 1:** Create a new file in the same folder as `main.py` and name it `.env`.
+- **Step 2:** In the `.env` file, create a variable called `WEBHOOK_URL` and set it to the Discord Webhook URL you want to receive messages at. For e.g `WEBHOOK_URL=https://discord.com` (no spaces)
+- **Step 3:** In the same file, if you want to have a mail token authorisation layer to only receive messages from people you give your token to, set `MailToken` to the token you want to use. For e.g `MailToken=er9g81`. If not, this variable will default to `nil` during boot (no authorisation required).
+
+The setting up documentation below has also been updated for new users of Mailman.
+
+I hope this improves your experience with the product!
 
 
 ## Steps to setting it up
