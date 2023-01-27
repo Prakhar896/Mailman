@@ -2,6 +2,8 @@
 
 Mailman is a project that basically just forwards data it receives in a URL POST Request to a Discord Webhook link and act as a sort of message conveyer.
 
+**NOTICE:** If you are updating Mailman from versions 1.0, 1.0.1 or 1.0.2 to 1.0.3 or later; you will need to re-configure Mailman to function properly as the configuration procedure has changed in 1.0.3 and above. See [`USAGE.md`](USAGE.md) for more information.
+
 Say for example I wanted to send a message to someone and then I would send a POST request to their Mailman service and they would get the message.
 (Yes this is very unconventional and yes I do know Whatsapp, even Discord for that matter, do exist, but I was bored...)
 
