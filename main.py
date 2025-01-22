@@ -1,11 +1,20 @@
 from flask import Flask, request, jsonify
 from config import *
-from activation import *
-import requests
-from datetime import datetime
+import requests, datetime
 import mdConverter
 
 app = Flask(__name__)
+
+def checkForActivation():
+    if not os.path.exists(os.path.join(os.getcwd(), "licensekey.txt")):
+        return False
+    else:
+        with open("licensekey.txt", 'r') as f:
+            # If last license check is more than 14 days prior, return False
+            if (datetime.datetime.now() - datetime.datetime.strptime(f.readlines()[3].split("\n")[0][len("Last License Check: ")::], "%Y-%m-%d %H:%M:%S")).days > 14:
+                return "Verify"
+            else:
+                return True
 
 def fileContent(fileName):
     with open(fileName, 'r') as f:
@@ -17,7 +26,7 @@ def sendWebhookMessage(data):
         'username': 'Mailman'
     }
     # Get current date and time
-    now = datetime.now()
+    now = datetime.datetime.now()
     if data["additionalContent"] != "nil":
         dataToSend['content'] = '```ADDITIONAL CONTENT\n---------------\n' + data["additionalContent"] + '```'
 
@@ -70,40 +79,18 @@ def copyright():
 
 
 if __name__ == "__main__":
-    # Check activation
-    activationCheck = checkForActivation()
-    if activationCheck == True:
-        print("Mailman is activated!")
-    elif activationCheck == False:
-        print("MAIN: Mailman is not activated! Triggering copy activation now...")
-        print()
-        version = None
-        if not os.path.isfile(os.path.join(os.getcwd(), 'version.txt')):
-            version = input("Pleae enter the version of Mailman you are using: ")
-            print()
-        else:
-            version = open('version.txt', 'r').read()
+    # Check for copy activation (Activator DRM Process)
+    status = checkForActivation()
+    if status != True:
         try:
-            initActivation("djr3x6wd", version)
+            import activation
+            if status == False:
+                activation.initActivation("djr3x6wd", "1.0.4")
+            elif status == "Verify":
+                activation.makeKVR("djr3x6wd", "1.0.4")
         except Exception as e:
-            print("MAIN: Error occurred in copy activation. Error: {}".format(e))
-            print("Aborting boot...")
-            sys.exit(1)
-    else:
-        print("MAIN: This copy's license key needs to be re-verified. Triggering key verification request...")
-        print()
-        version = None
-        if not os.path.isfile(os.path.join(os.getcwd(), 'version.txt')):
-            version = input("Pleae enter the version of Mailman you are using: ")
-            print()
-        else:
-            version = open('version.txt', 'r').read()
-        try:
-            makeKVR("djr3x6wd", version)
-        except Exception as e:
-            print("MAIN: Error occurred in verifying license key. Error: {}".format(e))
-            print("Aborting boot...")
-            sys.exit(1)
-        
+            print("ERROR: Activation failed to initialize. Error: {}".format(e))
+            if input() != "skip":
+                sys.exit(1)
 
     app.run(host="0.0.0.0", port=8000)
